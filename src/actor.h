@@ -8,6 +8,7 @@
 #include "inventory.h"
 #include "condition.h"
 #include "equipment.h"
+#include "action.h"
 
 #include <array>
 #include <iostream>
@@ -31,6 +32,7 @@ namespace controller
 		Inventory _inventory;
 		Condition _condition;
 		Equipment _equipment;
+		vector<Action> _actions;
 		//Movement _movement;
 
 	public:
