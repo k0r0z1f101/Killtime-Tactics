@@ -15,7 +15,7 @@ namespace sound
 	{
 		vector<string> songPaths = {}; //paths to songs that haven't played yet
 		int count;
-		char** files = GetDirectoryFiles(spPATH.c_str(), &count);
+		char** files = LoadDirectoryFiles(spPATH.c_str(), &count);
 
 		//loop through songs in the song folder and build a list of paths to songs that have not played yet
 		for (int i = 0; i < count; i++) {
@@ -32,7 +32,7 @@ namespace sound
 				songPaths.push_back(files[i]);
 			}
 		}
-		ClearDirectoryFiles();
+		UnloadDirectoryFiles();
 
 		//if there are still song that haven't played, choose one randomly
 		if(songPaths.size() != 0)
