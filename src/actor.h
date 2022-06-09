@@ -33,6 +33,7 @@ namespace controller
 		Condition _condition;
 		Equipment _equipment;
 		vector<Action> _actions;
+		Vector3 _position;
 		//Movement _movement;
 
 	public:
@@ -41,9 +42,11 @@ namespace controller
 
 		string& GetName();
 		Ability& GetAbility();
+		Vector3& GetPosition();
 
 		double RollInitiative();
 		vector<int> RollDice(int level);
 		int GetActionPoints();
+		void UseAttackAction(OffensiveActions action);
 	};
 }

@@ -57,4 +57,28 @@ namespace controller
 		return (_abilities.GetAbility(Speed) + lowest + highest);
 	}
 
+	Vector3& Actor::GetPosition()
+	{
+		return _position;
+	}
+
+	void Actor::UseAttackAction(OffensiveActions action)
+	{
+		//calculate attacker's offensive action associated skill
+		int abLvl = _abilities.GetAbilityLevel(offensiveActionsAbility[action]);
+
+		//roll attacker's attack
+
+		//find target's best defensive action and calculate associated skill
+
+		//roll target's defense
+
+		//calculate difference between both rolls
+
+		//apply damage to target
+
+		//apply any special effect to target
+
+		//apply any special effect to attacker
+	}
 }
