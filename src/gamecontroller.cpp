@@ -55,4 +55,9 @@ namespace controller
 
 		UpdateMainCamera();             // Update camera
 	}
+
+	void GameController::TestBattle()
+	{
+		_battle.UnitTest();
+	}
 }

@@ -12,6 +12,7 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Battle System");
 
     GameController _game;
+    _game.TestBattle();
     //--------------------------------------------------------------------------------------
 
     // Main game loop

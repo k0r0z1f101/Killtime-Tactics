@@ -25,6 +25,8 @@ namespace controller
 		GameController();
 		~GameController();
 
+		void TestBattle();
+
 		void UpdateMainCamera();
 		void Draw();
 		void DrawMode3D();
