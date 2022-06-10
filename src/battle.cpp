@@ -48,6 +48,7 @@ namespace controller
 		_currentInit = it->second;
 
 		cout << "Round: " << _currentRound << endl;
+		_actors[0].UseAttackAction(acOff_UnarmedMelee, _actors[1]);
 	}
 
 	void BattleController::UnitTest()

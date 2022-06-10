@@ -11,7 +11,9 @@ namespace controller
 
 	void Health::TakeDamage(int change, BodyPart part)
 	{
-		_health[part] -= change;
+		_health[part] += change;
+		for(size_t i = {}; i < BP_END; ++i)
+			cout << "part " << i << ": " << _health[i] << endl;
 		//check part condition
 		//check global health condition
 

@@ -28,6 +28,8 @@ namespace controller
 		Biography _biography;
 		Race _race;
 		Ability _abilities;
+		array<unsigned int, OS_END> _offensiveSkills;
+		array<unsigned int, DS_END> _defensiveSkills;
 		Health _health;
 		Inventory _inventory;
 		Condition _condition;
@@ -47,6 +49,10 @@ namespace controller
 		double RollInitiative();
 		vector<int> RollDice(int level);
 		int GetActionPoints();
-		void UseAttackAction(OffensiveActions action);
+		void TakeDamage(unsigned int damage, BodyPart part);
+		void UseAttackAction(OffensiveActions action, Actor& target);
+		DefensiveActions GetBestDefense();
+		unsigned int GetBestDefenseLevel();
+		void UseMoveAction(Vector3 endPos);
 	};
 }

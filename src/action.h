@@ -13,7 +13,7 @@ namespace controller
 {
 	enum OffensiveActions
 	{
-		off_UnarmedMelee = 0,
+		acOff_UnarmedMelee = 0,
 		OA_END
 	};
 
@@ -22,7 +22,7 @@ namespace controller
 
 	enum DefensiveActions
 	{
-		def_UnarmedMelee = 0,
+		acDef_UnarmedMelee = 0,
 		DA_END
 	};
 
@@ -31,7 +31,7 @@ namespace controller
 
 	enum UtilityActions
 	{
-		util_Move = 0,
+		acUtil_Move = 0,
 		UA_END
 	};
 

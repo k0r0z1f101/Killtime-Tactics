@@ -6,16 +6,16 @@ namespace controller
 	{
 		_abilities = abilities;
 
-		_skills = {};
-		for(size_t i = {}; i < SKILLS.size(); ++i)
-		{
-			vector<Skill> newSkillRow = {};
-			for(size_t j = {}; j < SKILLS[i].size(); ++j)
-			{
-				newSkillRow.push_back(Skill(SKILLS[i][j]));
-			}
-			_skills.push_back(newSkillRow);
-		}
+//		_skills = {};
+//		for(size_t i = {}; i < SKILLS.size(); ++i)
+//		{
+//			vector<Skill> newSkillRow = {};
+//			for(size_t j = {}; j < SKILLS[i].size(); ++j)
+//			{
+//				newSkillRow.push_back(Skill(SKILLS[i][j]));
+//			}
+//			_skills.push_back(newSkillRow);
+//		}
 	}
 	Ability::~Ability()
 	{
@@ -29,6 +29,7 @@ namespace controller
 
 	int Ability::GetAbilityLevel(Abilities ability)
 	{
+		std::cout << "ab " << _abilities[ability] << std::endl;
 		return ceil(double(_abilities[ability] * 0.5)) - 1;
 	}
 

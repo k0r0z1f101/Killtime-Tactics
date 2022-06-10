@@ -7,6 +7,8 @@ namespace controller
 	{
 		_name = name;
 		_actionPoints = {};
+		_offensiveSkills = {};
+		_defensiveSkills = {};
 	}
 
 	Actor::~Actor()
@@ -62,23 +64,84 @@ namespace controller
 		return _position;
 	}
 
-	void Actor::UseAttackAction(OffensiveActions action)
+	DefensiveActions Actor::GetBestDefense()
+	{
+		unsigned int highest = {};
+		unsigned int highestIndex = {};
+		for(int i = {}; i < DA_END; ++i)
+		{
+			unsigned int abLvl = _abilities.GetAbilityLevel(defensiveActionsAbility[i]);
+			abLvl += _defensiveSkills[i];
+			highestIndex = highest < abLvl ? i : highestIndex;
+			highest = highest < abLvl ? abLvl : highest;
+		}
+		return DefensiveActions(highestIndex);
+	}
+
+	unsigned int Actor::GetBestDefenseLevel()
+	{
+		unsigned int highest = {};
+		for(int i = {}; i < DA_END; ++i)
+		{
+			unsigned int abLvl = _abilities.GetAbilityLevel(defensiveActionsAbility[i]);
+			abLvl += _defensiveSkills[i];
+			highest = highest < abLvl ? abLvl : highest;
+		}
+		return highest;
+	}
+
+	void Actor::TakeDamage(unsigned int damage, BodyPart part)
+	{
+		_health.TakeDamage(damage, part);
+	}
+
+	void Actor::UseAttackAction(OffensiveActions action, Actor& target)
 	{
 		//calculate attacker's offensive action associated skill
-		int abLvl = _abilities.GetAbilityLevel(offensiveActionsAbility[action]);
+		unsigned int abLvl = _abilities.GetAbilityLevel(offensiveActionsAbility[action]);
+		abLvl += _offensiveSkills[action];
+
+		cout << "action: " << abLvl << endl;
 
 		//roll attacker's attack
+		vector<int> rollAttacker = RollDice(abLvl);
+		unsigned int rollAttTotal = {};
+		for (auto& n : rollAttacker)
+			rollAttTotal += n;
+		cout 	<< "Attacker: " << _name << endl
+				<< "Roll total: " << rollAttTotal << endl;
 
 		//find target's best defensive action and calculate associated skill
+		DefensiveActions targetDef = target.GetBestDefense();
+		unsigned int targetLvl = target.GetBestDefenseLevel();
 
 		//roll target's defense
+		vector<int> rollDefender = RollDice(targetLvl);
+		unsigned int rollDefTotal = {};
+		for (auto& n : rollDefender)
+			rollDefTotal += n;
+		cout 	<< "Defender: " << target.GetName() << endl
+				<< "Roll total: " << rollDefTotal << endl;
 
 		//calculate difference between both rolls
+		int diff = rollAttTotal - rollDefTotal;
+		if(diff < 0)
+			return;
+
+		//get a random body part if the attacker was not aiming
+		BodyPart targetPart = BodyPart(rand() % BP_END);
 
 		//apply damage to target
+		target.TakeDamage(diff, targetPart);
 
 		//apply any special effect to target
 
 		//apply any special effect to attacker
+	}
+
+	void Actor::UseMoveAction(Vector3 endPos)
+	{
+		//move to end position one square at a time and check for traps and other
+		_position = endPos; //temporary
 	}
 }
