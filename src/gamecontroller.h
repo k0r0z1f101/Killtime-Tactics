@@ -21,6 +21,12 @@ namespace controller
 		BattleController _battle;	//battle controller
 		MapController _map;			//map in play
 		Camera _camera;				//camera
+		vector<Model> _models;		//models loaded
+
+		//test
+		Model model;
+		Vector3 position;
+
 	public:
 		GameController();
 		~GameController();
