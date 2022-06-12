@@ -19,11 +19,12 @@ namespace controller
 //		Texture2D texture = LoadTexture("resources/model/texture/body.obj");         // Load model texture and set material
 //		SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);     // Set model material map texture
 
-		_positions.push_back({ -1.0f, 0.0f, 0.0f });            // Set model position
-		_positions.push_back({ 3.0f, 0.0f, 0.0f });            // Set model position
+		_positions.push_back({ -1.0f, 0.0f, 0.0f });           // Set test model position
+		_positions.push_back({ 3.0f, 0.0f, 0.0f });            // Set test model position
 
 		_actors.push_back(Actor("Jean"));
 		_actors.push_back(Actor("Roger"));
+
 		_battle = BattleController(_actors);
 	    SetTargetFPS(60);
 	}
@@ -95,9 +96,13 @@ namespace controller
 		{
 			string name = _actors[i].GetName();
 			cout << "target: " << name << endl;
-			_battle.GetCurrentInitiative().GetContextActions();
+			vector<OffensiveActions> offActions = _battle.GetCurrentInitiative().GetContextActions();
 			cout << "attacker: " << _battle.GetCurrentInitiative().GetName() << endl;
-//        		_actors[currentIni].GetContextActions(_actors[i]);
+			for(auto& oa : offActions)
+			{
+				cout << "action: " << offensiveActionsName[oa] << endl;
+			}
+			_menus.push_back(ContextMenu(_actors[i].GetPosition(), offActions));
 		}
 	}
 
@@ -112,6 +117,14 @@ namespace controller
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))	// Select model on mouse click, open context menu
         	UpdateContextMenu();
+
+        for(auto& m : _menus)
+        {
+        	if(m.UpdateMenu() > LIFESPAN)
+        	{
+//        		m.~ContextMenu();
+        	}
+        }
 	}
 
 	void GameController::TestBattle()

@@ -5,9 +5,10 @@
 #include "actor.h"
 #include "battle.h"
 #include "mapcontroller.h"
+#include "contextmenu.h"
 
-#define SCREEN_WIDTH 	1000
-#define SCREEN_HEIGHT	800
+#define SCREEN_WIDTH 	1600
+#define SCREEN_HEIGHT	900
 
 using namespace sound;
 
@@ -23,10 +24,8 @@ namespace controller
 		MapController _map;			//map in play
 		Camera _camera;				//camera
 		vector<Model> _models;		//models loaded
-		vector<Vector3> _positions; //positions of models
-
-		//test
-		Model model;
+		vector<Vector3> _positions; //position of models
+		vector<ContextMenu> _menus;	//contextual menus
 
 	public:
 		GameController();

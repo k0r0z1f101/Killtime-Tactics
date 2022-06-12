@@ -14,11 +14,14 @@ namespace controller
 	enum OffensiveActions
 	{
 		acOff_UnarmedMelee = 0,
+		acOff_WeaponMelee,
+		acOff_WeaponRanged,
 		OA_END
 	};
 
-	static const array<int,OA_END> offensiveActionsCost = { 1 };
-	static const array<Abilities,OA_END> offensiveActionsAbility = { Strength };
+	static const array<string, OA_END> offensiveActionsName = { "Unarmed Melee", "Weapon Melee", "Weapon Ranged"};
+	static const array<int,OA_END> offensiveActionsCost = { 1, 1, 1 };
+	static const array<Abilities,OA_END> offensiveActionsAbility = { Strength, Strength, Agility };
 
 	enum DefensiveActions
 	{
