@@ -28,12 +28,14 @@ namespace controller
 
 	public:
 		BattleController();
+		BattleController(vector<Actor>& actors);
 		~BattleController();
 
 		void RollInitiative();
 		void StartCombat();
 		void StartRound();
 		void NextInitiative();
+		Actor& GetCurrentInitiative();
 
 		void UnitTest();
 	};

@@ -7,6 +7,12 @@ namespace controller
 		_currentTurn = {};
 		_currentRound = {};
 	}
+	BattleController::BattleController(vector<Actor>& actors)
+	{
+		_currentTurn = {};
+		_currentRound = {};
+		_actors = actors;
+	}
 	BattleController::~BattleController(){}
 
 	void BattleController::RollInitiative()
@@ -53,8 +59,11 @@ namespace controller
 
 	void BattleController::UnitTest()
 	{
-		_actors.push_back(Actor("Jean"));
-		_actors.push_back(Actor("Roger"));
 		StartCombat();
+	}
+
+	Actor& BattleController::GetCurrentInitiative()
+	{
+		return _currentInit;
 	}
 }

@@ -15,12 +15,16 @@ namespace controller
 
 
 	    _models.push_back(LoadModel("resources/model/mirio2.obj"));                    // Load the animated model mesh and basic data
+	    _models.push_back(LoadModel("resources/model/mirio2.obj"));                    // Load the animated model mesh and basic data
 //		Texture2D texture = LoadTexture("resources/model/texture/body.obj");         // Load model texture and set material
 //		SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);     // Set model material map texture
 
-		position = { 0.0f, 0.0f, 0.0f };            // Set model position
+		_positions.push_back({ -1.0f, 0.0f, 0.0f });            // Set model position
+		_positions.push_back({ 3.0f, 0.0f, 0.0f });            // Set model position
 
-
+		_actors.push_back(Actor("Jean"));
+		_actors.push_back(Actor("Roger"));
+		_battle = BattleController(_actors);
 	    SetTargetFPS(60);
 	}
 
@@ -46,18 +50,55 @@ namespace controller
         EndDrawing();
 	}
 
+	void GameController::DrawModels()
+	{
+		int i = {};
+    	for(auto& m : _models)
+    	{
+    		m.transform = MatrixTranslate(_positions[i].x, _positions[i].y, _positions[i].z);
+    		DrawModelEx(m, (Vector3){0} , (Vector3){ 1.0f, 0.0f, 0.0f }, 0.0f, (Vector3){ 1.0f, 1.0f, 1.0f }, WHITE);
+    		UpdateMeshBuffer(m.meshes[0], 0, m.meshes[0].vertices, sizeof(float) * m.meshes[0].vertexCount * 3, 0);
+    		DrawMesh(m.meshes[0], m.materials[0], m.transform);
+    		++i;
+    	}
+	}
+
 	void GameController::DrawMode3D()
 	{
 		BeginMode3D(_camera);
 
     		_map.RenderMap();
 
-        	for(auto& m : _models)
-        	{
-        		DrawModelEx(m, position, (Vector3){ 1.0f, 0.0f, 0.0f }, 0.0f, (Vector3){ 1.0f, 1.0f, 1.0f }, WHITE);
-        	}
+    		DrawModels();
 
 		EndMode3D();
+	}
+
+	void GameController::UpdateContextMenu()
+	{
+		size_t i = {};
+		for(auto& m : _models)
+		{
+			cout << "model ------------" << endl;
+			// Check collision between ray and mesh
+			RayCollision newRay = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), _camera), m.meshes[0], m.transform);
+			if(newRay.hit)
+			{
+				cout << "hit! #" << i << endl;
+				break;
+			}
+			++i;
+		}
+		//find actions possible by actor on target, build and display context menu
+		cout << _actors.size() << endl;
+		if(i < _actors.size())
+		{
+			string name = _actors[i].GetName();
+			cout << "target: " << name << endl;
+			_battle.GetCurrentInitiative().GetContextActions();
+			cout << "attacker: " << _battle.GetCurrentInitiative().GetName() << endl;
+//        		_actors[currentIni].GetContextActions(_actors[i]);
+		}
 	}
 
 	void GameController::Update()
@@ -67,18 +108,10 @@ namespace controller
 
 		_songPlayer.updateStream();
 
-		UpdateMainCamera();             // Update camera
+		UpdateMainCamera();             				// Update camera
 
-		// Select model on mouse click, open context menu
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        {
-        	for(auto& m : _models)
-        	{
-				// Check collision between ray and box
-				BoundingBox newBounds = GetMeshBoundingBox(m.meshes[0]);
-				RayCollision newRay = GetRayCollisionBox(GetMouseRay(GetMousePosition(), _camera), newBounds);
-        	}
-        }
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))	// Select model on mouse click, open context menu
+        	UpdateContextMenu();
 	}
 
 	void GameController::TestBattle()

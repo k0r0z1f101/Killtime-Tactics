@@ -144,4 +144,12 @@ namespace controller
 		//move to end position one square at a time and check for traps and other
 		_position = endPos; //temporary
 	}
+
+	vector<OffensiveActions> Actor::GetContextActions()
+	{
+		vector<OffensiveActions> offActions = {};
+		for(int i = {}; i < OA_END; ++i)
+			offActions.push_back(OffensiveActions(i));
+		return offActions;
+	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include "raymath.h"
 #include "sound.h"
 #include "actor.h"
 #include "battle.h"
@@ -22,10 +23,10 @@ namespace controller
 		MapController _map;			//map in play
 		Camera _camera;				//camera
 		vector<Model> _models;		//models loaded
+		vector<Vector3> _positions; //positions of models
 
 		//test
 		Model model;
-		Vector3 position;
 
 	public:
 		GameController();
@@ -35,7 +36,9 @@ namespace controller
 
 		void UpdateMainCamera();
 		void Draw();
+		void DrawModels();
 		void DrawMode3D();
+		void UpdateContextMenu();
 		void Update();
 	};
 }

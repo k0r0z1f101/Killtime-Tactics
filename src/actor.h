@@ -54,5 +54,6 @@ namespace controller
 		DefensiveActions GetBestDefense();
 		unsigned int GetBestDefenseLevel();
 		void UseMoveAction(Vector3 endPos);
+		vector<OffensiveActions> GetContextActions();
 	};
 }
