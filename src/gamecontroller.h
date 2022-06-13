@@ -7,6 +7,8 @@
 #include "mapcontroller.h"
 #include "contextmenu.h"
 
+#include <vector>
+
 #define SCREEN_WIDTH 	1600
 #define SCREEN_HEIGHT	900
 
@@ -16,6 +18,14 @@ namespace controller
 {
 	class GameController
 	{
+
+	//test for custom mouse cursor
+	typedef struct Sprite {
+		Texture2D texture;
+		Rectangle rect;
+		Vector2 position;
+	} Sprite;
+
 	private:
 		vector<Actor> _actors;		//PCs and NPCs, monsters, traps, needed in the scene
 		SongPlayer _songPlayer;		//random song player
@@ -26,6 +36,7 @@ namespace controller
 		vector<Model> _models;		//models loaded
 		vector<Vector3> _positions; //position of models
 		vector<ContextMenu> _menus;	//contextual menus
+		Sprite _cursor;				//mouse cursor
 
 	public:
 		GameController();

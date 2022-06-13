@@ -13,6 +13,7 @@ int main(void)
 
     GameController _game;
     _game.TestBattle();
+
     //--------------------------------------------------------------------------------------
 
     // Main game loop

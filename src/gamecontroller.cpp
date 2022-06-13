@@ -27,6 +27,16 @@ namespace controller
 
 		_battle = BattleController(_actors);
 	    SetTargetFPS(60);
+
+
+	    //test for custom mouse cursor
+	    _cursor = (Sprite) {
+	    	.texture = LoadTexture("resources/pointer/unarmed.png"),
+			.rect = {0.0f, 0.0f, 64.0f, 64.0f},
+	    	.position = {0.0f, 0.0f},
+	    };
+
+	    HideCursor();
 	}
 
 	GameController::~GameController()
@@ -46,7 +56,10 @@ namespace controller
 
         	ClearBackground(BLACK);
 
+
         	DrawMode3D();
+        	//TEMPORARY TEST FOR MOUSE CURSOR
+        	DrawTextureRec(_cursor.texture, _cursor.rect, _cursor.position, WHITE);
 
         EndDrawing();
 	}
@@ -108,6 +121,10 @@ namespace controller
 
 	void GameController::Update()
 	{
+
+		//test for mouse cursor
+        _cursor.position = (Vector2){ .x = GetMousePosition().x, .y = GetMousePosition().y };
+
 		if(IsKeyPressed(KEY_F3))
 			_battle.NextInitiative();
 
@@ -118,13 +135,19 @@ namespace controller
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))	// Select model on mouse click, open context menu
         	UpdateContextMenu();
 
+        unsigned int i = {};
+        vector<unsigned int> indexToRemove = {};
         for(auto& m : _menus)
         {
         	if(m.UpdateMenu() > LIFESPAN)
         	{
+        		indexToRemove.push_back(i);
 //        		m.~ContextMenu();
         	}
+        	++i;
         }
+        for(auto& i : indexToRemove)
+        	_menus.erase(_menus.begin() + i);
 	}
 
 	void GameController::TestBattle()

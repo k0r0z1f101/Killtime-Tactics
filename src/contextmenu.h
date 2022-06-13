@@ -14,7 +14,7 @@ using std::chrono::system_clock;
 
 namespace controller
 {
-	static const float LIFESPAN = 50000.0f;
+	static const unsigned int LIFESPAN = 5000000;
 
 	class ContextMenu
 	{
