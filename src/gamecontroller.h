@@ -11,6 +11,7 @@
 
 #define SCREEN_WIDTH 	1600
 #define SCREEN_HEIGHT	900
+#define CURSOR_SIZE 	{0.0f, 0.0f, 48.0f, 48.0f}
 
 using namespace sound;
 
@@ -18,13 +19,14 @@ namespace controller
 {
 	class GameController
 	{
+		array<Texture2D,3> ACTION_CURSORS = { LoadTexture("resources/pointer/unarmed48.png"), LoadTexture("resources/pointer/sword48.png"), LoadTexture("resources/pointer/bow48.png") };
 
-	//test for custom mouse cursor
-	typedef struct Sprite {
-		Texture2D texture;
-		Rectangle rect;
-		Vector2 position;
-	} Sprite;
+		//test for custom mouse cursor
+		typedef struct Sprite {
+			Texture2D texture;
+			Rectangle rect;
+			Vector2 position;
+		} Sprite;
 
 	private:
 		vector<Actor> _actors;		//PCs and NPCs, monsters, traps, needed in the scene
@@ -48,6 +50,7 @@ namespace controller
 		void Draw();
 		void DrawModels();
 		void DrawMode3D();
+		void UpdateUI();
 		void UpdateContextMenu();
 		void Update();
 	};

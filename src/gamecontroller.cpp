@@ -31,8 +31,8 @@ namespace controller
 
 	    //test for custom mouse cursor
 	    _cursor = (Sprite) {
-	    	.texture = LoadTexture("resources/pointer/unarmed.png"),
-			.rect = {0.0f, 0.0f, 64.0f, 64.0f},
+	    	.texture = LoadTexture("resources/pointer/unarmed48.png"),
+			.rect = {0.0f, 0.0f, 48.0f, 48.0f},
 	    	.position = {0.0f, 0.0f},
 	    };
 
@@ -119,21 +119,24 @@ namespace controller
 		}
 	}
 
-	void GameController::Update()
+	void GameController::UpdateUI()
 	{
-
-		//test for mouse cursor
-        _cursor.position = (Vector2){ .x = GetMousePosition().x, .y = GetMousePosition().y };
-
-		if(IsKeyPressed(KEY_F3))
-			_battle.NextInitiative();
-
-		_songPlayer.updateStream();
-
-		UpdateMainCamera();             				// Update camera
+		_cursor.position = (Vector2){ .x = GetMousePosition().x, .y = GetMousePosition().y };
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))	// Select model on mouse click, open context menu
         	UpdateContextMenu();
+
+        int index = -1;
+        if(IsKeyPressed(KEY_ONE)) index = 0;
+        if(IsKeyPressed(KEY_TWO)) index = 1;
+        if(IsKeyPressed(KEY_THREE)) index = 2;
+
+        if(index != -1)
+    	    _cursor = (Sprite) {
+    	    	.texture = ACTION_CURSORS[index],
+    			.rect = CURSOR_SIZE,
+    	    	.position = GetMousePosition(),
+    	    };
 
         unsigned int i = {};
         vector<unsigned int> indexToRemove = {};
@@ -148,6 +151,18 @@ namespace controller
         }
         for(auto& i : indexToRemove)
         	_menus.erase(_menus.begin() + i);
+	}
+
+	void GameController::Update()
+	{
+		if(IsKeyPressed(KEY_F3))
+			_battle.NextInitiative();
+
+		_songPlayer.updateStream();
+
+		UpdateMainCamera();	// Update camera
+
+		UpdateUI();			//Update mouse and menus
 	}
 
 	void GameController::TestBattle()
