@@ -39,6 +39,7 @@ namespace controller
 		vector<Vector3> _positions; //position of models
 		vector<ContextMenu> _menus;	//contextual menus
 		Sprite _cursor;				//mouse cursor
+		int _hotkey;				//current hotkey selected
 
 	public:
 		GameController();
@@ -51,7 +52,7 @@ namespace controller
 		void DrawModels();
 		void DrawMode3D();
 		void UpdateUI();
-		void UpdateContextMenu();
+		Actor& UpdateContextMenu();
 		void Update();
 	};
 }

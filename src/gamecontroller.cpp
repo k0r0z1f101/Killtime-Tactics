@@ -28,6 +28,8 @@ namespace controller
 		_battle = BattleController(_actors);
 	    SetTargetFPS(60);
 
+	    _hotkey = -1;
+
 
 	    //test for custom mouse cursor
 	    _cursor = (Sprite) {
@@ -58,7 +60,7 @@ namespace controller
 
 
         	DrawMode3D();
-        	//TEMPORARY TEST FOR MOUSE CURSOR
+
         	DrawTextureRec(_cursor.texture, _cursor.rect, _cursor.position, WHITE);
 
         EndDrawing();
@@ -88,7 +90,7 @@ namespace controller
 		EndMode3D();
 	}
 
-	void GameController::UpdateContextMenu()
+	Actor& GameController::UpdateContextMenu()
 	{
 		size_t i = {};
 		for(auto& m : _models)
@@ -116,6 +118,7 @@ namespace controller
 				cout << "action: " << offensiveActionsName[oa] << endl;
 			}
 			_menus.push_back(ContextMenu(_actors[i].GetPosition(), offActions));
+			return _actors[i];
 		}
 	}
 
@@ -123,17 +126,20 @@ namespace controller
 	{
 		_cursor.position = (Vector2){ .x = GetMousePosition().x, .y = GetMousePosition().y };
 
+        if(IsKeyPressed(KEY_ONE)) _hotkey = 0;
+        if(IsKeyPressed(KEY_TWO)) _hotkey = 1;
+        if(IsKeyPressed(KEY_THREE)) _hotkey = 2;
+
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))	// Select model on mouse click, open context menu
-        	UpdateContextMenu();
+        {
+			Actor& target = UpdateContextMenu();
+        	if(_hotkey != -1)
+        		_battle.GetCurrentInitiative().UseAttackAction(OffensiveActions(_hotkey), target);
+		}
 
-        int index = -1;
-        if(IsKeyPressed(KEY_ONE)) index = 0;
-        if(IsKeyPressed(KEY_TWO)) index = 1;
-        if(IsKeyPressed(KEY_THREE)) index = 2;
-
-        if(index != -1)
+        if(_hotkey != -1)
     	    _cursor = (Sprite) {
-    	    	.texture = ACTION_CURSORS[index],
+    	    	.texture = ACTION_CURSORS[_hotkey],
     			.rect = CURSOR_SIZE,
     	    	.position = GetMousePosition(),
     	    };
