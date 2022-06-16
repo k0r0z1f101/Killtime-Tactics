@@ -19,7 +19,7 @@ namespace controller
 //		Texture2D texture = LoadTexture("resources/model/texture/body.obj");         // Load model texture and set material
 //		SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);     // Set model material map texture
 
-		_positions.push_back({ -1.0f, 0.0f, 0.0f });           // Set test model position
+		_positions.push_back({ 0.0f, 0.0f, 0.0f });           // Set test model position
 		_positions.push_back({ 3.0f, 0.0f, 0.0f });            // Set test model position
 
 		_actors.push_back(Actor("Jean"));
@@ -92,6 +92,16 @@ namespace controller
 
 	Actor& GameController::UpdateContextMenu()
 	{
+		//3d position of mouse cursor
+		Ray mouseRay = GetMouseRay(GetMousePosition(), _camera);
+		RayCollision mouseCollision = GetRayCollisionMesh(mouseRay, _map.GetModel().meshes[0], _map.GetModel().transform);
+
+		cout << "Mouse Ray: " << mouseCollision.point.x << ", " << mouseCollision.point.y << ", " << mouseCollision.point.z << endl;
+		cout << "Mouse Ray: " << mouseCollision.distance << endl;
+		cout << "Mouse Ray: " << mouseCollision.hit << endl;
+		cout << "Mouse Ray: " << mouseCollision.normal.x << ", " << mouseCollision.normal.y << ", " << mouseCollision.normal.z << endl;
+
+
 		size_t i = {};
 		for(auto& m : _models)
 		{
@@ -126,14 +136,15 @@ namespace controller
 	{
 		_cursor.position = (Vector2){ .x = GetMousePosition().x, .y = GetMousePosition().y };
 
-        if(IsKeyPressed(KEY_ONE)) _hotkey = 0;
-        if(IsKeyPressed(KEY_TWO)) _hotkey = 1;
-        if(IsKeyPressed(KEY_THREE)) _hotkey = 2;
+        if(IsKeyPressed(KEY_ZERO)) _hotkey = 0;
+        if(IsKeyPressed(KEY_ONE)) _hotkey = 1;
+        if(IsKeyPressed(KEY_TWO)) _hotkey = 2;
+        if(IsKeyPressed(KEY_THREE)) _hotkey = 3;
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))	// Select model on mouse click, open context menu
         {
 			Actor& target = UpdateContextMenu();
-        	if(_hotkey != -1)
+        	if(_hotkey == 1 || _hotkey == 2 || _hotkey == 3)
         		_battle.GetCurrentInitiative().UseAttackAction(OffensiveActions(_hotkey), target);
 		}
 

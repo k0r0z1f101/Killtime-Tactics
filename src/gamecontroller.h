@@ -19,7 +19,7 @@ namespace controller
 {
 	class GameController
 	{
-		array<Texture2D,3> ACTION_CURSORS = { LoadTexture("resources/pointer/unarmed48.png"), LoadTexture("resources/pointer/sword48.png"), LoadTexture("resources/pointer/bow48.png") };
+		array<Texture2D,4> ACTION_CURSORS = { LoadTexture("resources/pointer/move48.png"), LoadTexture("resources/pointer/unarmed48.png"), LoadTexture("resources/pointer/sword48.png"), LoadTexture("resources/pointer/bow48.png") };
 
 		//test for custom mouse cursor
 		typedef struct Sprite {

@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include "raymath.h"
 
 namespace controller
 {
@@ -17,5 +18,7 @@ namespace controller
 		~MapController();
 
 		void RenderMap();
+		Mesh& GetMesh();
+		Model& GetModel();
 	};
 }
