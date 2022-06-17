@@ -37,9 +37,9 @@ namespace controller
 //		DrawMesh(m.meshes[0], m.materials[0], m.transform);
 
 //		_mapModel.transform = MatrixTranslate(_mapPosition.x, _mapPosition.y, _mapPosition.z);
-		DrawModel(_mapModel, _mapPosition, 1.0f, WHITE);
+//		DrawModel(_mapModel, _mapPosition, 1.0f, WHITE);
 		UpdateMeshBuffer(_mapModel.meshes[0], 0, _mapModel.meshes[0].vertices, sizeof(float) * _mapModel.meshes[0].vertexCount * 3, 0);
-//		DrawMesh(_mapModel.meshes[0], _mapModel.materials[0], _mapModel.transform);
+		DrawMesh(_mapModel.meshes[0], _mapModel.materials[0], _mapModel.transform);
 	}
 
 	Mesh& MapController::GetMesh()

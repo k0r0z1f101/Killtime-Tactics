@@ -35,11 +35,12 @@ namespace controller
 		BattleController _battle;	//battle controller
 		MapController _map;			//map in play
 		Camera _camera;				//camera
-		vector<Model> _models;		//models loaded
-		vector<Vector3> _positions; //position of models
+		vector<Model> _models;		//character models loaded
+		vector<Vector3> _positions; //position of character models
 		vector<ContextMenu> _menus;	//contextual menus
 		Sprite _cursor;				//mouse cursor
 		int _hotkey;				//current hotkey selected
+		Vector3 _moveTilePos;		//position of move tile
 
 	public:
 		GameController();

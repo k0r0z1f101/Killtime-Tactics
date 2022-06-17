@@ -87,6 +87,8 @@ namespace controller
 
     		DrawModels();
 
+    		DrawPlane(_moveTilePos, { 1.0f, 1.0f }, RED);
+
 		EndMode3D();
 	}
 
@@ -100,6 +102,7 @@ namespace controller
 		cout << "Mouse Ray: " << mouseCollision.distance << endl;
 		cout << "Mouse Ray: " << mouseCollision.hit << endl;
 		cout << "Mouse Ray: " << mouseCollision.normal.x << ", " << mouseCollision.normal.y << ", " << mouseCollision.normal.z << endl;
+		_moveTilePos = mouseCollision.point;
 
 
 		size_t i = {};
